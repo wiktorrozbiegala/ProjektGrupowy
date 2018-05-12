@@ -8,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PGR.Database
+namespace PGRForms.Database
 {
     public class FirebaseConnection
     {
@@ -21,8 +21,8 @@ namespace PGR.Database
                 BasePath = "https://projektgrupowy-pg2018.firebaseio.com"
             };
             _client = new FirebaseClient(config);
-            
-        }        
+
+        }
 
         public Dictionary<string, List<Measurement>> GetAllSessionsMeas()
         {

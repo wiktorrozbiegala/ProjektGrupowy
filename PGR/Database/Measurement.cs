@@ -4,14 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PGR
+namespace PGRForms
 {
     /// <summary>
     /// Consists of all params from database
     /// </summary>
     public class Measurement
     {
-        public string AsuLevel {get; set;}
+        public string AsuLevel { get; set; }
         public string CQI { get; set; }
         public string CellId { get; set; }
         public string CellIdentity { get; set; }
@@ -21,6 +21,6 @@ namespace PGR
         public string RSRQ { get; set; }
         public string SNR { get; set; }
         public string SignalStrengthdBm { get; set; }
-        public string TrackingAreaCode { get; set; }        
+        public string TrackingAreaCode { get; set; }
     }
 }

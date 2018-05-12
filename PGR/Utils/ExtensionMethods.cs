@@ -2,7 +2,7 @@
 using System.Collections.ObjectModel;
 using System.Reflection;
 
-namespace PGR.Utils
+namespace PGRForms.Utils
 {
     public static class ExtensionMethods
     {
