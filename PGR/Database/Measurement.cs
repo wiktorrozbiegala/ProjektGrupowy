@@ -6,21 +6,20 @@ using System.Threading.Tasks;
 
 namespace PGRForms
 {
-    /// <summary>
-    /// Consists of all params from database
-    /// </summary>
+    
+    /// zmienilem na inty bo tak prościej chyba, chart przyjmuje inty, average liczymy z intów, to pozmieniałem wszedzie
     public class Measurement
     {
-        public string AsuLevel { get; set; }
-        public string CQI { get; set; }
-        public string CellId { get; set; }
-        public string CellIdentity { get; set; }
-        public string MobileCountryCode { get; set; }
-        public string MobileNetworkCode { get; set; }
-        public string RSRP { get; set; }
-        public string RSRQ { get; set; }
-        public string SNR { get; set; }
-        public string SignalStrengthdBm { get; set; }
-        public string TrackingAreaCode { get; set; }
+        public int AsuLevel { get; set; }
+        public int CQI { get; set; }
+        public int CellId { get; set; }
+        public int CellIdentity { get; set; }
+        public int MobileCountryCode { get; set; }
+        public int MobileNetworkCode { get; set; }
+        public int RSRP { get; set; }
+        public int RSRQ { get; set; }
+        public int SNR { get; set; }
+        public int SignalStrengthdBm { get; set; }
+        public int TrackingAreaCode { get; set; }
     }
 }
