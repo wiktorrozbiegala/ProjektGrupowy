@@ -1,0 +1,99 @@
+{
+  "project_info": {
+    "project_number": "898956578501",
+    "firebase_url": "https://projektgrupowy-pg2018.firebaseio.com",
+    "project_id": "projektgrupowy-pg2018",
+    "storage_bucket": "projektgrupowy-pg2018.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:898956578501:android:d40d1ea7e691f0cc",
+        "android_client_info": {
+          "package_name": "com.example.mlody.logs2firebase"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "898956578501-a0m89vii19uet86fsbfsiq8s2e23dlbl.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.mlody.logs2firebase",
+            "certificate_hash": "e8a1a5749ee35e4863562a12e34830e9e7276f5e"
+          }
+        },
+        {
+          "client_id": "898956578501-fdvllo3i7rhlk9rnbnc36b9ocfeh8euk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAB6QiWsGXSJyRdLM2gIRkyjTS-dovH6m4"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "898956578501-fdvllo3i7rhlk9rnbnc36b9ocfeh8euk.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:898956578501:android:2d8a2788f1607957",
+        "android_client_info": {
+          "package_name": "com.example.mlody.ltestatus"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "898956578501-emivmfjhsgdtqt2j02vq3fjg9u6hv9qk.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.mlody.ltestatus",
+            "certificate_hash": "e8a1a5749ee35e4863562a12e34830e9e7276f5e"
+          }
+        },
+        {
+          "client_id": "898956578501-fdvllo3i7rhlk9rnbnc36b9ocfeh8euk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAB6QiWsGXSJyRdLM2gIRkyjTS-dovH6m4"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "898956578501-fdvllo3i7rhlk9rnbnc36b9ocfeh8euk.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
