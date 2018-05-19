@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PGRForms.Database;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,7 +9,7 @@ namespace PGRForms
 {
     public class DataModifications
     {
-        Database.FirebaseConnection fc = new Database.FirebaseConnection();
+        FirebaseConnection fc = new FirebaseConnection();
         
         // ona rzyga listy z parametrami, które potem izi wrzucić do charta i obliczyć z nich średnie itp
         public List<int> ArrangeData(string param)

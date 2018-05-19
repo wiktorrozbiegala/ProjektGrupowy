@@ -15,94 +15,94 @@ namespace PGRForms
         public Form1()
         {
             InitializeComponent();
+            Init();
+            FillDataGrid();
         }
 
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Title title1 = new System.Windows.Forms.DataVisualization.Charting.Title();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Title title2 = new System.Windows.Forms.DataVisualization.Charting.Title();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea3 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Series series3 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Title title3 = new System.Windows.Forms.DataVisualization.Charting.Title();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea4 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Series series4 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Title title4 = new System.Windows.Forms.DataVisualization.Charting.Title();
             this.chart1 = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.chart2 = new System.Windows.Forms.DataVisualization.Charting.Chart();
-            this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
+            this.listView1 = new System.Windows.Forms.ListView();
+            this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             ((System.ComponentModel.ISupportInitialize)(this.chart1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.chart2)).BeginInit();
             this.SuspendLayout();
             // 
             // chart1
             // 
-            chartArea1.AxisX.Title = "[t]";
-            chartArea1.AxisY.Title = "[dB]";
-            chartArea1.Name = "ChartArea1";
-            this.chart1.ChartAreas.Add(chartArea1);
+            chartArea3.AxisX.Title = "[t]";
+            chartArea3.AxisY.Title = "[dB]";
+            chartArea3.Name = "ChartArea1";
+            this.chart1.ChartAreas.Add(chartArea3);
             this.chart1.Location = new System.Drawing.Point(532, 22);
             this.chart1.Name = "chart1";
-            series1.BorderWidth = 3;
-            series1.ChartArea = "ChartArea1";
-            series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-            series1.Color = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            series1.Name = "Series1";
-            this.chart1.Series.Add(series1);
+            series3.BorderWidth = 3;
+            series3.ChartArea = "ChartArea1";
+            series3.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+            series3.Color = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            series3.Name = "Series1";
+            this.chart1.Series.Add(series3);
             this.chart1.Size = new System.Drawing.Size(313, 215);
             this.chart1.TabIndex = 0;
-            title1.Name = "Title1";
-            title1.Text = "SNR";
-            this.chart1.Titles.Add(title1);
+            title3.Name = "Title1";
+            title3.Text = "SNR";
+            this.chart1.Titles.Add(title3);
             // 
             // chart2
             // 
-            chartArea2.AxisX.Title = "[t]";
-            chartArea2.AxisY.Title = "[dBm]";
-            chartArea2.Name = "ChartArea1";
-            this.chart2.ChartAreas.Add(chartArea2);
+            chartArea4.AxisX.Title = "[t]";
+            chartArea4.AxisY.Title = "[dBm]";
+            chartArea4.Name = "ChartArea1";
+            this.chart2.ChartAreas.Add(chartArea4);
             this.chart2.Location = new System.Drawing.Point(532, 278);
             this.chart2.Name = "chart2";
-            series2.BorderWidth = 3;
-            series2.ChartArea = "ChartArea1";
-            series2.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-            series2.Color = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            series2.Name = "Series1";
-            this.chart2.Series.Add(series2);
+            series4.BorderWidth = 3;
+            series4.ChartArea = "ChartArea1";
+            series4.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+            series4.Color = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            series4.Name = "Series1";
+            this.chart2.Series.Add(series4);
             this.chart2.Size = new System.Drawing.Size(313, 215);
             this.chart2.TabIndex = 1;
-            title2.Name = "Title1";
-            title2.Text = "Signal Strength";
-            this.chart2.Titles.Add(title2);
+            title4.Name = "Title1";
+            title4.Text = "Signal Strength";
+            this.chart2.Titles.Add(title4);
             // 
-            // label1
+            // listView1
             // 
-            this.label1.AutoSize = true;
-            this.label1.BackColor = System.Drawing.SystemColors.InactiveBorder;
-            this.label1.Font = new System.Drawing.Font("Arial", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.label1.ForeColor = System.Drawing.Color.Red;
-            this.label1.Location = new System.Drawing.Point(81, 72);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(65, 22);
-            this.label1.TabIndex = 2;
-            this.label1.Text = "label1";
+            this.listView1.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.columnHeader1,
+            this.columnHeader2});
+            this.listView1.Location = new System.Drawing.Point(55, 59);
+            this.listView1.Name = "listView1";
+            this.listView1.Size = new System.Drawing.Size(197, 264);
+            this.listView1.TabIndex = 2;
+            this.listView1.UseCompatibleStateImageBehavior = false;
+            this.listView1.View = System.Windows.Forms.View.Details;
             // 
-            // label2
+            // columnHeader1
             // 
-            this.label2.AutoSize = true;
-            this.label2.BackColor = System.Drawing.SystemColors.InactiveBorder;
-            this.label2.Font = new System.Drawing.Font("Arial", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.label2.ForeColor = System.Drawing.Color.Red;
-            this.label2.Location = new System.Drawing.Point(81, 100);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(65, 22);
-            this.label2.TabIndex = 3;
-            this.label2.Text = "label2";
+            this.columnHeader1.Text = "Parametr";
+            this.columnHeader1.Width = 106;
+            // 
+            // columnHeader2
+            // 
+            this.columnHeader2.Text = "Wartość";
+            this.columnHeader2.Width = 81;
             // 
             // Form1
             // 
             this.BackColor = System.Drawing.SystemColors.ControlLight;
             this.ClientSize = new System.Drawing.Size(905, 520);
-            this.Controls.Add(this.label2);
-            this.Controls.Add(this.label1);
+            this.Controls.Add(this.listView1);
             this.Controls.Add(this.chart2);
             this.Controls.Add(this.chart1);
             this.Name = "Form1";
@@ -110,7 +110,6 @@ namespace PGRForms
             ((System.ComponentModel.ISupportInitialize)(this.chart1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.chart2)).EndInit();
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
         private void Form1_Load(object sender, EventArgs e)
@@ -122,8 +121,8 @@ namespace PGRForms
             this.chart2.Series[0].Points.DataBindXY(dm.ArrangeData("time"), dm.ArrangeData("SignalStrengthdBm"));
 
             // wylicza srednia z listy, zaokragla do 2 miejsca i konwertuje na stringa bo tego chce Text
-            this.label1.Text = ("SNR: " + Math.Round(dm.ArrangeData("snr").Average(), 2).ToString() + " [dB]");
-            this.label2.Text = ("Moc: " + Math.Round(dm.ArrangeData("SignalStrengthdBm").Average(), 2).ToString() + " [dBm]");
+            //this.label1.Text = ("SNR: " + Math.Round(dm.ArrangeData("snr").Average(), 2).ToString() + " [dB]");
+            //this.label2.Text = ("Moc: " + Math.Round(dm.ArrangeData("SignalStrengthdBm").Average(), 2).ToString() + " [dBm]");
         }
     }
 }

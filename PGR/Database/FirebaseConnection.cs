@@ -13,6 +13,7 @@ namespace PGRForms.Database
     public class FirebaseConnection
     {
         private IFirebaseClient _client;
+        private EventStreamResponse _response;
 
         public FirebaseConnection()
         {
@@ -34,6 +35,37 @@ namespace PGRForms.Database
         {
             FirebaseResponse response = _client.Get($"networkInfo/{session}");
             return response.ResultAs<List<Measurement>>();
+        }
+
+        public async void SetAction(Action action, string session, FirebaseAction actionType)
+        {
+            _response = await _client.OnAsync($"/networkInfo/{session}",
+                added: (s, args, d) =>
+                {
+                    if (actionType == FirebaseAction.OnAdd)
+                        action();
+                },
+                changed: (s, args, d) =>
+                {
+                    if (actionType == FirebaseAction.OnChange)
+                        action();
+                },
+                removed: (s, args, d) =>
+                {
+                    if (actionType == FirebaseAction.OnDelete)
+                        action();
+                });
+        }
+
+        public void Dispose()
+        {
+            _response.Dispose();
+        }
+        public enum FirebaseAction
+        {
+            OnAdd,
+            OnChange,
+            OnDelete
         }
     }
 }
