@@ -4,9 +4,6 @@ using FireSharp.Interfaces;
 using FireSharp.Response;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace PGRForms.Database
 {
@@ -30,7 +27,7 @@ namespace PGRForms.Database
             FirebaseResponse response = _client.Get("networkInfo");
             return response.ResultAs<Dictionary<string, List<Measurement>>>();
         }
-
+        
         public List<Measurement> GetSingleSessionMeas(string session)
         {
             FirebaseResponse response = _client.Get($"networkInfo/{session}");

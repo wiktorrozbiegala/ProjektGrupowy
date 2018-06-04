@@ -79,7 +79,7 @@
   <ItemGroup>
     <Compile Include="Database\FirebaseConnection.cs" />
     <Compile Include="Database\Measurement.cs" />
-    <Compile Include="DataModifications.cs" />
+    <Compile Include="Utils\DataCollector.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>

@@ -1,10 +1,12 @@
 ﻿using PGRForms.Database;
 using PGRForms.Utils;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Data;
+using System.ComponentModel;
+using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
-using static PGRForms.Database.FirebaseConnection;
+using System.Windows.Forms.DataVisualization.Charting;
 
 namespace PGRForms
 {
@@ -31,52 +33,63 @@ namespace PGRForms
         private System.Windows.Forms.DataVisualization.Charting.Chart chart1;
         private System.Windows.Forms.DataVisualization.Charting.Chart chart2;
 
-        public void UpdateDataGrid()
+        public void UpdateDataGrid(string sessionName)
         {
-            if (Application.OpenForms.Count != 0)
+            if (this.IsHandleCreated)
             {
-                SafeClear();
-                foreach (var item in data)
+                var temp = connection.GetSingleSessionMeas(sessionName).LastOrDefault().ToParams();
+                var tempList = new List<ListViewItem>();
+                foreach (var item in temp)
                 {
-                    SafeAdd(item);
+                    tempList.Add(new ListViewItem(new string[] { item.Param, item.Value }));
                 }
+                var temppp = tempList.ToArray();
+                var control = (ListView)this.Controls.Find($"listView{sessionName}", true).FirstOrDefault();
+                jebacTo = ()=> {
+                    control.BeginUpdate();
+                    control.Items.Clear();
+                    control.Items.AddRange(temppp);
+                    control.EndUpdate();
+                };
+                control.Invoke(jebacTo);
             }
         }
 
-        public void FillDataGrid()
+        public void UpdateChart(string sessionName, Param chartType)
         {
-            foreach (var item in data)
+            if (this.IsHandleCreated)
             {
-                listView1.Items.Add(new ListViewItem(new string[] { item.Param, item.Value }));
+                var temp = connection.GetSingleSessionMeas(sessionName);
+                var data = new DataCollector(temp).RetrieveData(chartType);
+                var control = (Chart)this.Controls.Find($"chart{chartType}{sessionName}", true).FirstOrDefault();
+                jebacTo = () => 
+                {
+                    control.Series[0].Points.DataBindXY(Enumerable.Range(1, data.Count).ToList(), data);
+                };
+                control.Invoke(jebacTo);
             }
-
         }
 
-        public void SafeClear()
-        {
-            jebacTo = listView1.Items.Clear;
-            listView1.Invoke(jebacTo);
-        }
-
-        public void SafeAdd(X item)
-        {
-            jebacTo = () => listView1.Items.Add(new ListViewItem(new string[] { item.Param, item.Value }));
-            listView1.Invoke(jebacTo);
-        }
-
-        public void Init()
-        {
-            //connection.SetAction(UpdateDataGrid, "-LB8eNjME3_jibkajhcw", FirebaseAction.OnChange);
-        }
-
-        private ListView listView1;
-        private ColumnHeader columnHeader1;
-        private ColumnHeader columnHeader2;
+        //public void Init()
+        //{
+        //    connection.SetAction(UpdateDataGrid, "-LB8eNjME3_jibkajhcw", FirebaseAction.OnChange);
+        //}
         private ObservableCollection<X> data => connection.GetSingleSessionMeas("-LB8eNjME3_jibkajhcw").LastOrDefault().ToParams();
         private FirebaseConnection connection = new FirebaseConnection();
 
         public delegate void myDel();
         public myDel jebacTo;
+        private TabControl tabControl1;
+
+        [ToolboxItem(true)]
+        [ToolboxBitmap(typeof(ListView))]
+        public class ListViewDoubleBuffered : ListView
+        {
+            public ListViewDoubleBuffered()
+            {
+                this.DoubleBuffered = true;
+            }
+        }
     }
 }
 

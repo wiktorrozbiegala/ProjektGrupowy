@@ -22,4 +22,19 @@ namespace PGRForms
         public int SignalStrengthdBm { get; set; }
         public int TrackingAreaCode { get; set; }
     }
+
+    public enum Param
+    {
+        AsuLevel,
+        CQI ,
+        CellId ,
+        CellIdentity ,
+        MobileCountryCode ,
+        MobileNetworkCode ,
+        RSRP ,
+        RSRQ ,
+        SNR ,
+        SignalStrengthdBm ,
+        TrackingAreaCode
+    }
 }
