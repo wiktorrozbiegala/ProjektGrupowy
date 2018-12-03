@@ -17,7 +17,6 @@ namespace PGRForms
         private void InitializeComponent()
         {
             this.tabControl1 = new System.Windows.Forms.TabControl();
-            this.tabControl1.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabControl1
@@ -35,7 +34,6 @@ namespace PGRForms
             this.Controls.Add(this.tabControl1);
             this.Name = "Form1";
             this.Load += new System.EventHandler(this.Form1_Load);
-            this.tabControl1.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }

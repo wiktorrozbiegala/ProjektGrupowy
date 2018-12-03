@@ -10,10 +10,10 @@ namespace PGRForms
     public class DataCollector
     {
         FirebaseConnection fc = new FirebaseConnection();
-        private List<Measurement> _messurements;
+        private List<Measurement> _measurements;
         public DataCollector(List<Measurement> list)
         {
-            _messurements = list;
+            _measurements = list;
         }
         // ona rzyga listy z parametrami, które potem izi wrzucić do charta i obliczyć z nich średnie itp
         public List<int> RetrieveData(Param param)
@@ -21,9 +21,11 @@ namespace PGRForms
             switch (param)
             {
                 case Param.SNR:
-                    return _messurements.Select(x => x.SNR).ToList();
+                    return _measurements.Select(x => x.SNR).ToList();
                 case Param.SignalStrengthdBm:
-                    return _messurements.Select(x => x.SignalStrengthdBm).ToList();
+                    return _measurements.Select(x => x.SignalStrengthdBm).ToList();
+                case Param.RSRP:
+                    return _measurements.Select(x => x.RSRP).ToList();
                 default:
                     throw new Exception("UZUPELNIJ TE LISTE O PARAMETR");
             }            
