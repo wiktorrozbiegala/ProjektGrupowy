@@ -26,6 +26,8 @@ namespace PGRForms
                     return _measurements.Select(x => x.SignalStrengthdBm).ToList();
                 case Param.RSRP:
                     return _measurements.Select(x => x.RSRP).ToList();
+                case Param.RSRQ:
+                    return _measurements.Select(x => x.RSRQ).ToList();
                 default:
                     throw new Exception("UZUPELNIJ TE LISTE O PARAMETR");
             }            
