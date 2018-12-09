@@ -19,7 +19,6 @@ namespace PGRForms
         public int RSRP { get; set; }
         public int RSRQ { get; set; }
         public int SNR { get; set; }
-        public int SignalStrengthdBm { get; set; }
         public int TrackingAreaCode { get; set; }
     }
 
@@ -34,7 +33,6 @@ namespace PGRForms
         RSRP ,
         RSRQ ,
         SNR ,
-        SignalStrengthdBm ,
         TrackingAreaCode
     }
 }

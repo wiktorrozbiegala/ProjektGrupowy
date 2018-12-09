@@ -22,8 +22,6 @@ namespace PGRForms
             {
                 case Param.SNR:
                     return _measurements.Select(x => x.SNR).ToList();
-                case Param.SignalStrengthdBm:
-                    return _measurements.Select(x => x.SignalStrengthdBm).ToList();
                 case Param.RSRP:
                     return _measurements.Select(x => x.RSRP).ToList();
                 case Param.RSRQ:

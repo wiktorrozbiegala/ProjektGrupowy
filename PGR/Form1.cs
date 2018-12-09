@@ -97,7 +97,7 @@ namespace PGRForms
                 {
                     UpdateDataGrid(sessionName);
                     UpdateChart(sessionName, Param.SNR);
-                    UpdateChart(sessionName, Param.SignalStrengthdBm);
+                    UpdateChart(sessionName, Param.RSRP);
                     Thread.Sleep(1000);
                 }
             }).Start();
@@ -119,7 +119,7 @@ namespace PGRForms
             tab.Controls.AddRange(CreateCharts(sessionName, new List<CustomChart>()
             {
                 new CustomChart { Name = Param.SNR, TitleOX = "czas", TitleOY = "[dB]" },
-                new CustomChart { Name = Param.SignalStrengthdBm, TitleOX = "czas", TitleOY = "[dBm]" }
+                new CustomChart { Name = Param.RSRP, TitleOX = "czas", TitleOY = "[dBm]" }
             }).ToArray());
 
             return tab;
@@ -192,10 +192,6 @@ namespace PGRForms
                     Font = new Font(FontFamily.GenericSansSerif, 14, FontStyle.Bold)
                     
                 };
-                if(title.Text.Equals("SignalStrengthdBm"))
-                {
-                    title.Text = "Moc sygnału";
-                }
 
                 chart.Titles.Add(title);
                 ret.Add(chart);
