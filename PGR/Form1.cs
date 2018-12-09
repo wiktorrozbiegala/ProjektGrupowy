@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
+using System.Drawing;
 
 namespace PGRForms
 {
@@ -117,8 +118,8 @@ namespace PGRForms
             tab.Controls.Add(CreateListView(sessionName));
             tab.Controls.AddRange(CreateCharts(sessionName, new List<CustomChart>()
             {
-                new CustomChart { Name = Param.SNR, TitleOX = "[t]", TitleOY = "[dB]" },
-                new CustomChart { Name = Param.SignalStrengthdBm, TitleOX = "[t]", TitleOY = "[dBm]" }
+                new CustomChart { Name = Param.SNR, TitleOX = "czas", TitleOY = "[dB]" },
+                new CustomChart { Name = Param.SignalStrengthdBm, TitleOX = "czas", TitleOY = "[dBm]" }
             }).ToArray());
 
             return tab;
@@ -150,15 +151,20 @@ namespace PGRForms
 
                 var chartArea = new ChartArea()
                 {
-                    Name = $"chartArea{charts[i].Name}{sessionName}"
+                    Name = $"chartArea{charts[i].Name}{sessionName}",
                 };
                 chartArea.AxisX.Title = charts[i].TitleOX;
                 chartArea.AxisY.Title = charts[i].TitleOY;
-
-
+                chartArea.AxisX.LabelStyle.Enabled = false;
+                chartArea.AxisY.MajorGrid.LineColor = Color.Gainsboro;
+                chartArea.AxisX.MajorGrid.Enabled = false;
+                chartArea.AxisX.ArrowStyle = AxisArrowStyle.Triangle;
+                chartArea.AxisY.ArrowStyle = AxisArrowStyle.Triangle;
+                chartArea.AxisX.TitleFont = new Font(FontFamily.GenericSansSerif, 12);
+                chartArea.AxisY.TitleFont = new Font(FontFamily.GenericSansSerif, 10);
                 var chart = new Chart()
                 {
-                    Location = new System.Drawing.Point(497, 220 * i + 10),
+                    Location = new System.Drawing.Point(397, 220 * i + 10),
                     Name = $"chart{charts[i].Name}{sessionName}"
                 };
 
@@ -166,29 +172,38 @@ namespace PGRForms
 
                 var series = new Series()
                 {
-                    BorderWidth = 3,
+                    BorderWidth = 2,
                     ChartArea = $"chartArea{charts[i].Name}{sessionName}",
-                    ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line,
-                    Color = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0))))),
-                    Name = $"series{charts[i].Name}{sessionName}"
-                };
+                    ChartType = SeriesChartType.Line,
+                    Color = Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0))))),
+                    Name = $"series{charts[i].Name}{sessionName}",
+                    //Color = Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(230)))), ((int)(((byte)(230)))))
+            };
 
                 chart.Series.Add(series);
-                chart.Size = new System.Drawing.Size(313, 215);
+                chart.Size = new Size(400, 200);
                 chart.TabIndex = 0;
 
                 var title = new Title()
                 {
                     Name = $"title{charts[i].Name}{sessionName}",
-                    Text = charts[i].Name.ToString()
+                    Text = charts[i].Name.ToString(),
+                    Alignment = ContentAlignment.TopCenter,
+                    Font = new Font(FontFamily.GenericSansSerif, 14, FontStyle.Bold)
+                    
                 };
-                chart.Titles.Add(title);
+                if(title.Text.Equals("SignalStrengthdBm"))
+                {
+                    title.Text = "Moc sygnału";
+                }
 
+                chart.Titles.Add(title);
                 ret.Add(chart);
             }
 
             return ret;
         }
+        
 
         private void loadSessionToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -224,6 +239,7 @@ namespace PGRForms
         }
     }
 
+    
     public class CustomChart
     {
         public Param Name { get; set; }
@@ -236,4 +252,5 @@ namespace PGRForms
         public const string ColumnHeaderText1 = "Parametr";
         public const string ColumnHeaderText2 = "Wartość";
     }
+
 }

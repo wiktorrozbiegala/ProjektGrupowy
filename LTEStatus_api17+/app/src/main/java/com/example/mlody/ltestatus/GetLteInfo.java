@@ -11,6 +11,10 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.telephony.*;
 import java.util.List;
+import java.util.Date;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.time.LocalTime;
 
 public class GetLteInfo extends PhoneStateListener {
 
@@ -37,6 +41,7 @@ public class GetLteInfo extends PhoneStateListener {
     public int SignalStrengthdBm = 0;
     public int RSRP = 0;
     public int RSRQ = 0;
+    public String timestamp;
 
     int counter = 0;
 
@@ -105,8 +110,9 @@ public class GetLteInfo extends PhoneStateListener {
     }
 
     public static String generateKey(){
-        DatabaseReference pushedPostRef = myRef.push();
-        String key = pushedPostRef.getKey();
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+        Date date = new Date();
+        String key = dateFormat.format(date);
         return key;
     }
 }

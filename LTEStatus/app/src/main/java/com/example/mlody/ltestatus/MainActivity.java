@@ -6,20 +6,20 @@ import android.content.Context;
 import android.content.pm.PackageManager;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.telephony.PhoneStateListener;
 import android.view.View;
-
-import java.util.concurrent.TimeUnit;
+import android.app.AlertDialog;
+import android.widget.EditText;
+import android.text.InputType;
+import android.content.DialogInterface;
 
 public class MainActivity extends AppCompatActivity {
     public static final int MY_REQUEST_CODE = 10;
     public static Context mContext;
     public static Activity mActivity;
     private static GetLteInfo mTel;
-
+    public static String userSessionId = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,9 +30,27 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void startBtn(View v) {
-        GetLteInfo.generatedKey = GetLteInfo.generateKey();
-        GetLteInfo.start = true;
-        mTel = new GetLteInfo(mContext);
+        final AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Session id:");
+        final EditText input = new EditText(this);
+        input.setInputType(InputType.TYPE_CLASS_TEXT);
+        builder.setView(input);
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                userSessionId = input.getText().toString();
+                GetLteInfo.generatedKey = GetLteInfo.generateKey();
+                GetLteInfo.start = true;
+                mTel = new GetLteInfo(mContext);
+            }
+        });
+        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+        builder.show();
     }
 
     public void stopBtn(View v) {

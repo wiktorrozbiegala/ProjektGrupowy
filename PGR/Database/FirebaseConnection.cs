@@ -30,6 +30,7 @@ namespace PGRForms.Database
         
         public List<Measurement> GetSingleSessionMeas(string session)
         {
+            
             FirebaseResponse response = _client.Get($"networkInfo/{session}");
             return response.ResultAs<List<Measurement>>();
         }
