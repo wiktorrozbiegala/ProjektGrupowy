@@ -11,14 +11,12 @@ public class NetworkParams {
     public int AsuLevel;       //getAsuLevel()
     public int CQI;        //getCqi()
     public int SNR;        //getRssnr()
-    public int SignalStrengthdBm;      //getDbm()
     public int RSRP;    //getRsrp()
     public int RSRQ;       //getRsrq()
     //SubscriptionInfo
-
     public NetworkParams(int CellIdentity, int MobileCountryCode, int MobileNetworkCode,
                          int CellId, int TrackingAreaCode, int AsuLevel, int CQI, int SNR,
-                         int RSRP, int RSRQ, int SignalStrengthdBm){
+                         int RSRP, int RSRQ){
         this.CellIdentity = CellIdentity;
         this.MobileCountryCode = MobileCountryCode;
         this.MobileNetworkCode = MobileNetworkCode;
@@ -29,7 +27,6 @@ public class NetworkParams {
         this.SNR = SNR;
         this.RSRP = RSRP;
         this.RSRQ = RSRQ;
-        this.SignalStrengthdBm = SignalStrengthdBm;
     }
 }
 

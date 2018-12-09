@@ -9,7 +9,12 @@ import android.content.pm.PackageManager;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.telephony.*;
+
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.logging.ConsoleHandler;
 
 public class GetLteInfo extends PhoneStateListener {
 
@@ -33,12 +38,10 @@ public class GetLteInfo extends PhoneStateListener {
     public int AsuLevel;
     public int CQI;
     public int SNR;
-    public int SignalStrengthdBm;
-    public int RSRP;
-    public int RSRQ;
-
-    int counter = 0;
-
+    public int vlueOfRSRP;
+    public int vlueOfRSRQ;
+    public String timestamp;
+    public static String root = "networkInfo";
     private static FirebaseDatabase database = FirebaseDatabase.getInstance();
     public static DatabaseReference myRef = database.getReference();
     public static String generatedKey;
@@ -59,7 +62,6 @@ public class GetLteInfo extends PhoneStateListener {
             GetLteInfo.listCellInfo = GetLteInfo.tManager.getAllCellInfo();
         }
 
-        counter++;
         if (listCellInfo != null)
             for (CellInfo a_Info : listCellInfo) {
                 if (CellInfoLte.class.isInstance(a_Info)) {
@@ -75,24 +77,26 @@ public class GetLteInfo extends PhoneStateListener {
                         AsuLevel = CSS.getAsuLevel();
                         CQI = CSS.getCqi();
                         SNR = CSS.getRssnr();
-                        SignalStrengthdBm = CSS.getDbm();
-                        RSRP = CSS.getRsrp();
-                        RSRQ = CSS.getRsrq();
-                        pushToFirebase(counter, generatedKey);
+                        vlueOfRSRP = CSS.getRsrp();
+                        vlueOfRSRQ = CSS.getRsrq();
+                        DateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
+                        Date date = new Date();
+                        timestamp = dateFormat.format(date);
+                        pushToFirebase(generatedKey);
                     }
                 }
             }
     }
 
-    public void pushToFirebase(int counter, String key){
-        NetworkParams networkInfo = new NetworkParams(CellIdentity, MobileCountryCode, MobileNetworkCode, CellId, TrackingAreaCode, AsuLevel, CQI, SNR, SignalStrengthdBm, RSRP, RSRQ);
-        myRef.child("networkInfo").child(key).child(Integer.toString(counter)).setValue(networkInfo);
-        myRef.child("networkInfo").child(key).child(Integer.toString(counter)).orderByValue();
+    public void pushToFirebase(String key){
+        NetworkParams networkInfo = new NetworkParams(CellIdentity, MobileCountryCode, MobileNetworkCode, CellId, TrackingAreaCode, AsuLevel, CQI, SNR,  vlueOfRSRP, vlueOfRSRQ);
+        myRef.child(root).child(key).child(timestamp).setValue(networkInfo);
     }
 
     public static String generateKey(){
-        DatabaseReference pushedPostRef = myRef.push();
-        String key = pushedPostRef.getKey();
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+        Date date = new Date();
+        String key = MainActivity.userSessionId+"_"+dateFormat.format(date);
         return key;
     }
 }
