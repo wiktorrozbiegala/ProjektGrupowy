@@ -16,7 +16,7 @@ namespace PGRForms
         /// Required designer variable.
         /// </summary>
         private System.ComponentModel.IContainer components = null;
-
+        
         /// <summary>
         /// Clean up any resources being used.
         /// </summary>
@@ -29,9 +29,6 @@ namespace PGRForms
             }
             base.Dispose(disposing);
         }
-
-        private System.Windows.Forms.DataVisualization.Charting.Chart chart1;
-        private System.Windows.Forms.DataVisualization.Charting.Chart chart2;
 
         public void UpdateDataGrid(string sessionName)
         {
@@ -69,6 +66,16 @@ namespace PGRForms
                 control.Invoke(jebacTo);
             }
         }
+        //private void Chart_MouseMove(object sender, MouseEventArgs e)
+        //{
+        //    Point mousePoint = new Point(e.X, e.Y);
+        //    foreach (var chart in charts...)
+        //    {
+
+        //    }
+        //    chart.ChartAreas[0].CursorX.SetCursorPixelPosition(mousePoint, true);
+        //    chart.ChartAreas[0].CursorY.SetCursorPixelPosition(mousePoint, true);
+        //}
 
         //public void Init()
         //{
