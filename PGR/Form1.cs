@@ -8,7 +8,9 @@ using System.Windows.Forms.DataVisualization.Charting;
 namespace PGRForms
 {
     public partial class Form1 : Form
-    {         
+    {
+        private FirebaseConnection _database = new FirebaseConnection();
+
         public Form1()
         {
             InitializeComponent();
@@ -17,38 +19,72 @@ namespace PGRForms
         private void InitializeComponent()
         {
             this.tabControl1 = new System.Windows.Forms.TabControl();
+            this.menuStrip1 = new System.Windows.Forms.MenuStrip();
+            this.menuToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.loadSessionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabControl1
             // 
-            this.tabControl1.Location = new System.Drawing.Point(12, 12);
+            this.tabControl1.Location = new System.Drawing.Point(12, 31);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(881, 496);
+            this.tabControl1.Size = new System.Drawing.Size(881, 477);
             this.tabControl1.TabIndex = 3;
+            // 
+            // menuStrip1
+            // 
+            this.menuStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
+            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.menuToolStripMenuItem});
+            this.menuStrip1.Location = new System.Drawing.Point(0, 0);
+            this.menuStrip1.Name = "menuStrip1";
+            this.menuStrip1.Size = new System.Drawing.Size(905, 28);
+            this.menuStrip1.TabIndex = 4;
+            this.menuStrip1.Text = "menuStrip1";
+            // 
+            // menuToolStripMenuItem
+            // 
+            this.menuToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.loadSessionToolStripMenuItem});
+            this.menuToolStripMenuItem.Name = "menuToolStripMenuItem";
+            this.menuToolStripMenuItem.Size = new System.Drawing.Size(58, 24);
+            this.menuToolStripMenuItem.Text = "Menu";
+            // 
+            // loadSessionToolStripMenuItem
+            // 
+            this.loadSessionToolStripMenuItem.Name = "loadSessionToolStripMenuItem";
+            this.loadSessionToolStripMenuItem.Size = new System.Drawing.Size(181, 26);
+            this.loadSessionToolStripMenuItem.Text = "Load Session";
+            this.loadSessionToolStripMenuItem.Click += new System.EventHandler(this.loadSessionToolStripMenuItem_Click);
             // 
             // Form1
             // 
             this.BackColor = System.Drawing.SystemColors.ControlLight;
             this.ClientSize = new System.Drawing.Size(905, 520);
             this.Controls.Add(this.tabControl1);
+            this.Controls.Add(this.menuStrip1);
+            this.MainMenuStrip = this.menuStrip1;
             this.Name = "Form1";
             this.Load += new System.EventHandler(this.Form1_Load);
+            this.menuStrip1.ResumeLayout(false);
+            this.menuStrip1.PerformLayout();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
         private void Form1_Load(object sender, EventArgs e)
-        {
-            FirebaseConnection database = new FirebaseConnection();            
+        {           
 
-            var sessionsNames = database.GetAllSessionsMeas().Keys;
+            var sessionsNames = _database.GetAllSessionsMeas().Keys;
 
-            foreach (var session in sessionsNames)
-            {
-                this.tabControl1.Controls.Add(CreateNewTab(session));
-                UpdateTab(session);
-            }
-            
+            //foreach (var session in sessionsNames)
+            //{
+            //    this.tabControl1.Controls.Add(CreateNewTab(session));
+            //    UpdateTab(session);
+            //}
+
         }
 
         private void UpdateTab(string sessionName)
@@ -152,6 +188,39 @@ namespace PGRForms
             }
 
             return ret;
+        }
+
+        private void loadSessionToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            PopupForm popup = new PopupForm
+            {
+                StartPosition = FormStartPosition.CenterScreen
+            };
+            DialogResult dialogresult = popup.ShowDialog();
+            if (dialogresult == DialogResult.OK)
+            {
+                var sessionName = popup.GetSesionName();
+                if (String.IsNullOrEmpty(sessionName))
+                {
+                    MessageBox.Show("Please provide session name!");
+                    return;
+                }
+
+                var sessionData = _database.GetSingleSessionMeas(sessionName);
+                if (sessionData == null)
+                {
+                    MessageBox.Show($"Could not find any data for session name: {sessionName}!");
+                    return;
+                }
+
+                tabControl1.Controls.Add(CreateNewTab(sessionName));
+                UpdateTab(sessionName);
+            }
+            else if (dialogresult == DialogResult.Cancel)
+            {
+                Console.WriteLine("You clicked either Cancel or X button in the top right corner");
+            }
+            popup.Dispose();
         }
     }
 

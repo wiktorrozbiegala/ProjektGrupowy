@@ -29,10 +29,7 @@ namespace PGRForms
             }
             base.Dispose(disposing);
         }
-
-        private System.Windows.Forms.DataVisualization.Charting.Chart chart1;
-        private System.Windows.Forms.DataVisualization.Charting.Chart chart2;
-
+        
         public void UpdateDataGrid(string sessionName)
         {
             if (this.IsHandleCreated)
@@ -80,6 +77,9 @@ namespace PGRForms
         public delegate void myDel();
         public myDel jebacTo;
         private TabControl tabControl1;
+        private MenuStrip menuStrip1;
+        private ToolStripMenuItem menuToolStripMenuItem;
+        private ToolStripMenuItem loadSessionToolStripMenuItem;
 
         [ToolboxItem(true)]
         [ToolboxBitmap(typeof(ListView))]
