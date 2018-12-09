@@ -28,6 +28,10 @@ namespace PGRForms
                     return _measurements.Select(x => x.RSRP).ToList();
                 case Param.RSRQ:
                     return _measurements.Select(x => x.RSRQ).ToList();
+                case Param.CQI:
+                    return _measurements.Select(x => x.CQI).ToList();
+                case Param.AsuLevel:
+                    return _measurements.Select(x => x.AsuLevel).ToList();
                 default:
                     throw new Exception("UZUPELNIJ TE LISTE O PARAMETR");
             }            
