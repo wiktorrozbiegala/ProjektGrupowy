@@ -78,14 +78,8 @@ namespace PGRForms
         private void Form1_Load(object sender, EventArgs e)
         {           
 
-            var sessionsNames = _database.GetAllSessionsMeas().Keys;
-
-            //foreach (var session in sessionsNames)
-            //{
-            //    this.tabControl1.Controls.Add(CreateNewTab(session));
-            //    UpdateTab(session);
-            //}
-
+            // if we want to get session names:
+            //var sessionsNames = _database.GetAllSessionsMeas().Keys;
         }
 
         private void UpdateTab(string sessionName)

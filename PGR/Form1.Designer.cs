@@ -34,12 +34,14 @@ namespace PGRForms
         {
             if (this.IsHandleCreated)
             {
-                var temp = connection.GetSingleSessionMeas(sessionName).LastOrDefault().ToParams();
+                var temp = connection.GetSingleSessionMeas(sessionName).LastOrDefault().Value.ToParams();
+                
                 var tempList = new List<ListViewItem>();
                 foreach (var item in temp)
                 {
                     tempList.Add(new ListViewItem(new string[] { item.Param, item.Value }));
                 }
+
                 var temppp = tempList.ToArray();
                 var control = (ListView)this.Controls.Find($"listView{sessionName}", true).FirstOrDefault();
                 jebacTo = ()=> {
@@ -56,8 +58,10 @@ namespace PGRForms
         {
             if (this.IsHandleCreated)
             {
-                var temp = connection.GetSingleSessionMeas(sessionName);
-                var data = new DataCollector(temp).RetrieveData(chartType);
+                var temp = connection.GetSingleSessionMeas(sessionName).Select(x => x.Value).ToList();
+
+                var data = new DataCollector(temp).RetrieveData(chartType);                
+
                 var control = (Chart)this.Controls.Find($"chart{chartType}{sessionName}", true).FirstOrDefault();
                 jebacTo = () => 
                 {
@@ -81,7 +85,6 @@ namespace PGRForms
         //{
         //    connection.SetAction(UpdateDataGrid, "-LB8eNjME3_jibkajhcw", FirebaseAction.OnChange);
         //}
-        private ObservableCollection<X> data => connection.GetSingleSessionMeas("-LB8eNjME3_jibkajhcw").LastOrDefault().ToParams();
         private FirebaseConnection connection = new FirebaseConnection();
 
         public delegate void myDel();
