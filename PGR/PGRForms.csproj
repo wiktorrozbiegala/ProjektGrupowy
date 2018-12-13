@@ -78,13 +78,15 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Database\FirebaseConnection.cs" />
-    <Compile Include="Database\Measurement.cs" />
+    <Compile Include="Measurement\BaseMeasurement.cs" />
     <Compile Include="PopupForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="PopupForm.Designer.cs">
       <DependentUpon>PopupForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Measurement\AvarageMeasurement.cs" />
+    <Compile Include="Utils\CustomChartCreator.cs" />
     <Compile Include="Utils\DataCollector.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>

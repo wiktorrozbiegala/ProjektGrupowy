@@ -4,11 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PGRForms
+namespace PGRForms.Measurement
 {
     
     /// zmienilem na inty bo tak prościej chyba, chart przyjmuje inty, average liczymy z intów, to pozmieniałem wszedzie
-    public class Measurement
+    public class BaseMeasurement
     {
         public int AsuLevel { get; set; }
         public int CQI { get; set; }

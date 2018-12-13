@@ -2,9 +2,9 @@
 using FireSharp.Config;
 using FireSharp.Interfaces;
 using FireSharp.Response;
-using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using PGRForms.Measurement;
 
 namespace PGRForms.Database
 {
@@ -23,16 +23,16 @@ namespace PGRForms.Database
 
         }
 
-        public Dictionary<string, Dictionary<string, Measurement>> GetAllSessionsMeas()
+        public Dictionary<string, Dictionary<string, BaseMeasurement>> GetAllSessionsMeas()
         {
             FirebaseResponse response = _client.Get("networkInfo");
-            return response.ResultAs<Dictionary<string, Dictionary<string, Measurement>>>();
+            return response.ResultAs<Dictionary<string, Dictionary<string, BaseMeasurement>>>();
         }
         
-        public Dictionary<string, Measurement> GetSingleSessionMeas(string session)
+        public Dictionary<string, BaseMeasurement> GetSingleSessionMeas(string session)
         {            
             FirebaseResponse response = _client.Get($"networkInfo/{session}");
-            return response.ResultAs<Dictionary<string, Measurement>>();
+            return response.ResultAs<Dictionary<string, BaseMeasurement>>();
         }
 
         public async void SetAction(Action action, string session, FirebaseAction actionType)

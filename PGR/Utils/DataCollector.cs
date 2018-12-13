@@ -1,35 +1,33 @@
 ﻿using PGRForms.Database;
+using PGRForms.Measurement;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace PGRForms
 {
     public class DataCollector
     {
-        FirebaseConnection fc = new FirebaseConnection();
-        private List<Measurement> _measurements;
-        public DataCollector(List<Measurement> list)
+        private List<BaseMeasurement> _measurements;
+        public DataCollector(List<BaseMeasurement> list)
         {
             _measurements = list;
         }
 
         // ona rzyga listy z parametrami, które potem izi wrzucić do charta i obliczyć z nich średnie itp
-        public List<int> RetrieveData(Param param)
+        public List<int> RetrieveData(AvgParam param)
         {
             switch (param)
             {
-                case Param.SNR:
+                case AvgParam.SNR:
                     return _measurements.Select(x => x.SNR).ToList();
-                case Param.RSRP:
+                case AvgParam.RSRP:
                     return _measurements.Select(x => x.RSRP).ToList();
-                case Param.RSRQ:
+                case AvgParam.RSRQ:
                     return _measurements.Select(x => x.RSRQ).ToList();
-                case Param.CQI:
+                case AvgParam.CQI:
                     return _measurements.Select(x => x.CQI).ToList();
-                case Param.AsuLevel:
+                case AvgParam.AsuLevel:
                     return _measurements.Select(x => x.AsuLevel).ToList();
                 default:
                     throw new Exception("UZUPELNIJ TE LISTE O PARAMETR");

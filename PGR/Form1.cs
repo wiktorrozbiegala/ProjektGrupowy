@@ -5,6 +5,9 @@ using System.Threading;
 using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
 using System.Drawing;
+using PGRForms.Measurement;
+using System.Linq;
+using PGRForms.Utils;
 
 namespace PGRForms
 {
@@ -76,10 +79,10 @@ namespace PGRForms
 
         }
         private void Form1_Load(object sender, EventArgs e)
-        {           
+        {
 
             // if we want to get session names:
-            //var sessionsNames = _database.GetAllSessionsMeas().Keys;
+            var sessionsNames = _database.GetAllSessionsMeas().Keys;
         }
 
         private void UpdateTab(string sessionName)
@@ -89,9 +92,8 @@ namespace PGRForms
                 Thread.CurrentThread.IsBackground = true;
                 while (true)
                 {
-                    UpdateDataGrid(sessionName);
-                    UpdateChart(sessionName, Param.SNR);
-                    UpdateChart(sessionName, Param.RSRP);
+                    UpdateDataGrid($"{sessionName}");
+                    UpdateChart(sessionName);
                     Thread.Sleep(1000);
                 }
             }).Start();
@@ -109,23 +111,52 @@ namespace PGRForms
                 Text = sessionName,
                 UseVisualStyleBackColor = true,
             };
-            tab.Controls.Add(CreateListView(sessionName));
-            tab.Controls.AddRange(CreateCharts(sessionName, new List<CustomChart>()
-            {
-                new CustomChart { Name = Param.SNR, TitleOX = "czas", TitleOY = "[dB]" },
-                new CustomChart { Name = Param.RSRP, TitleOX = "czas", TitleOY = "[dBm]" }
-            }).ToArray());
+
+            // last measurement list view
+            tab.Controls.Add(CreateListView($"{sessionName}Last", new Point(6, 50), new Size(197, 200)));
+            // avg measurement list view
+            tab.Controls.Add(CreateListView($"{sessionName}Avg", new Point(6, 300), new Size(197, 120)));
+
+            tab.Controls.Add(CreateComboBox());
+
+
+            tab.Controls.Add(CreateChart(sessionName));
 
             return tab;
         }
 
-        private ListViewDoubleBuffered CreateListView(string name)
+        private ComboBox CreateComboBox()
+        {
+            var xd = new List<AvgParam>
+            {
+                AvgParam.AsuLevel,
+                AvgParam.CQI,
+                AvgParam.RSRP,
+                AvgParam.RSRQ,
+                AvgParam.SNR
+            };
+
+            var comboBox = new ComboBox
+            {
+                FormattingEnabled = true,
+                Location = new System.Drawing.Point(397, 54),
+                Name = "comboBox1",
+                Size = new System.Drawing.Size(121, 21),
+                DropDownStyle = ComboBoxStyle.DropDownList
+            };
+
+            xd.ForEach(x => comboBox.Items.Add(x));
+            comboBox.SelectedIndex = UIConsts.DefaultComboBoxIndex;
+            return comboBox;
+        }
+
+        private ListViewDoubleBuffered CreateListView(string name, Point location, Size size)
         {
             var list = new ListViewDoubleBuffered()
             {
-                Location = new System.Drawing.Point(6, 12),
+                Location = location, //new System.Drawing.Point(6, 12),
                 Name = $"listView{name}",
-                Size = new System.Drawing.Size(197, 264),
+                Size = size, // new System.Drawing.Size(197, 264),
                 TabIndex = 2,
                 UseCompatibleStateImageBehavior = false,
                 View = System.Windows.Forms.View.Details
@@ -137,61 +168,53 @@ namespace PGRForms
             return list;
         }
 
-        private List<Chart> CreateCharts(string sessionName, List<CustomChart> charts)
+        private Chart CreateChart(string sessionName)
         {
-            var ret = new List<Chart>();
-            for (int i = 0; i < charts.Count; i++)
+            var chart = new Chart()
             {
+                Location = new System.Drawing.Point(300, 180),
+                Name = $"chart{sessionName}"
+            };
+            chart.Size = new Size(400, 200);
+            chart.TabIndex = 0;
 
-                var chartArea = new ChartArea()
-                {
-                    Name = $"chartArea{charts[i].Name}{sessionName}",
-                };
-                chartArea.AxisX.Title = charts[i].TitleOX;
-                chartArea.AxisY.Title = charts[i].TitleOY;
-                chartArea.AxisX.LabelStyle.Enabled = false;
-                chartArea.AxisY.MajorGrid.LineColor = Color.Gainsboro;
-                chartArea.AxisX.MajorGrid.Enabled = false;
-                chartArea.AxisX.ArrowStyle = AxisArrowStyle.Triangle;
-                chartArea.AxisY.ArrowStyle = AxisArrowStyle.Triangle;
-                chartArea.AxisX.TitleFont = new Font(FontFamily.GenericSansSerif, 12);
-                chartArea.AxisY.TitleFont = new Font(FontFamily.GenericSansSerif, 10);
-                var chart = new Chart()
-                {
-                    Location = new System.Drawing.Point(397, 220 * i + 10),
-                    Name = $"chart{charts[i].Name}{sessionName}"
-                };
-
-                chart.ChartAreas.Add(chartArea);
-
-                var series = new Series()
-                {
-                    BorderWidth = 2,
-                    ChartArea = $"chartArea{charts[i].Name}{sessionName}",
-                    ChartType = SeriesChartType.Line,
-                    Color = Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0))))),
-                    Name = $"series{charts[i].Name}{sessionName}",
-                    //Color = Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(230)))), ((int)(((byte)(230)))))
+            // title
+            var title = new Title()
+            {
+                Alignment = ContentAlignment.TopCenter,
+                Font = new Font(FontFamily.GenericSansSerif, 14, FontStyle.Bold)
             };
 
-                chart.Series.Add(series);
-                chart.Size = new Size(400, 200);
-                chart.TabIndex = 0;
+            // area
+            var chartArea = new ChartArea()
+            {
+                Name = $"chartArea{sessionName}",
+            };            
+            chartArea.AxisX.LabelStyle.Enabled = false;
+            chartArea.AxisY.MajorGrid.LineColor = Color.Gainsboro;
+            chartArea.AxisX.MajorGrid.Enabled = false;
+            chartArea.AxisX.ArrowStyle = AxisArrowStyle.Triangle;
+            chartArea.AxisY.ArrowStyle = AxisArrowStyle.Triangle;
+            chartArea.AxisX.TitleFont = new Font(FontFamily.GenericSansSerif, 12);
+            chartArea.AxisY.TitleFont = new Font(FontFamily.GenericSansSerif, 10);
 
-                var title = new Title()
-                {
-                    Name = $"title{charts[i].Name}{sessionName}",
-                    Text = charts[i].Name.ToString(),
-                    Alignment = ContentAlignment.TopCenter,
-                    Font = new Font(FontFamily.GenericSansSerif, 14, FontStyle.Bold)
-                    
-                };
+            // series
+            var series = new Series()
+            {
+                BorderWidth = 2,
+                ChartArea = $"chartArea{sessionName}",
+                ChartType = SeriesChartType.Line,
+                Color = Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0))))),
+                Name = $"series{sessionName}",
+                //Color = Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(230)))), ((int)(((byte)(230)))))
+            };
 
-                chart.Titles.Add(title);
-                ret.Add(chart);
-            }
 
-            return ret;
+            chart.Titles.Add(title);
+            chart.ChartAreas.Add(chartArea);
+            chart.Series.Add(series);
+
+            return chart;
         }
         
 
@@ -232,7 +255,7 @@ namespace PGRForms
     
     public class CustomChart
     {
-        public Param Name { get; set; }
+        public AvgParam Name { get; set; }
         public string TitleOX { get; set; }
         public string TitleOY { get; set; }
     }
@@ -241,6 +264,7 @@ namespace PGRForms
     {
         public const string ColumnHeaderText1 = "Parametr";
         public const string ColumnHeaderText2 = "Wartość";
+        public const int DefaultComboBoxIndex = 4;
     }
 
 }
