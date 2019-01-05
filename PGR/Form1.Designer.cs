@@ -46,13 +46,13 @@ namespace PGRForms
 
                 // update list view with last measurement
                 var control = (ListView)this.Controls.Find($"listView{sessionName}Last", true).FirstOrDefault();
-                jebacTo = ()=> {
+                somethingImportant = ()=> {
                     control.BeginUpdate();
                     control.Items.Clear();
                     control.Items.AddRange(sessionLastListViewData.ToArray());
                     control.EndUpdate();
                 };
-                control.Invoke(jebacTo);
+                control.Invoke(somethingImportant);
 
 
                 var listOfAllMeasurements = new List<BaseMeasurement>(sessionAllMeasurements.Values);
@@ -66,13 +66,13 @@ namespace PGRForms
 
                 // update list view with avg measurements
                 control = (ListView)this.Controls.Find($"listView{sessionName}Avg", true).FirstOrDefault();
-                jebacTo = () => {
+                somethingImportant = () => {
                     control.BeginUpdate();
                     control.Items.Clear();
                     control.Items.AddRange(sessionLastListViewData.ToArray());
                     control.EndUpdate();
                 };
-                control.Invoke(jebacTo);
+                control.Invoke(somethingImportant);
 
             }
         }
@@ -85,11 +85,11 @@ namespace PGRForms
                 AvgParam selectedParam;
                 var stringFromComboBox = "";
 
-                jebacTo = () =>
+                somethingImportant = () =>
                 {
                     stringFromComboBox = this.Controls.Find("comboBox1", true).FirstOrDefault().Text;
                 };
-                this.Invoke(jebacTo);
+                this.Invoke(somethingImportant);
 
                 Enum.TryParse(stringFromComboBox, out selectedParam);
 
@@ -102,14 +102,14 @@ namespace PGRForms
 
                 // try to find chart and update its data
                 var control = (Chart)this.Controls.Find($"chart{sessionName}", true).FirstOrDefault();
-                jebacTo = () => 
+                somethingImportant = () => 
                 {
                     control.Titles[0].Name = selectedParam.ToString();
                     control.ChartAreas[0].AxisX.Title = chart.TitleOX;
                     control.ChartAreas[0].AxisY.Title = chart.TitleOY;
                     control.Series[0].Points.DataBindXY(Enumerable.Range(1, data.Count).ToList(), data);
                 };
-                control.Invoke(jebacTo);
+                control.Invoke(somethingImportant);
             }
         }
         //private void Chart_MouseMove(object sender, MouseEventArgs e)
@@ -130,11 +130,13 @@ namespace PGRForms
         private FirebaseConnection connection = new FirebaseConnection();
 
         public delegate void myDel();
-        public myDel jebacTo;
+        public myDel somethingImportant;
         private TabControl tabControl1;
         private MenuStrip menuStrip1;
         private ToolStripMenuItem menuToolStripMenuItem;
         private ToolStripMenuItem loadSessionToolStripMenuItem;
+        private Label label1;
+        private Label label2;
 
         [ToolboxItem(true)]
         [ToolboxBitmap(typeof(ListView))]

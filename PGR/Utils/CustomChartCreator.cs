@@ -12,16 +12,19 @@ namespace PGRForms.Utils
         public static CustomChart Create(AvgParam chartType)
         {
             var titleOY = "";
-            var titleOX = "czas";
+            var titleOX = "sample";
             switch (chartType)
             {
                 case AvgParam.AsuLevel:
+                    titleOY = "[dB]";
                     break;
                 case AvgParam.CQI:
                     break;
                 case AvgParam.RSRP:
+                    titleOY = "[dBm]";
                     break;
                 case AvgParam.RSRQ:
+                    titleOY = "[dBm]";
                     break;
                 case AvgParam.SNR:
                     titleOY = "[dB]";

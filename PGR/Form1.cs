@@ -26,6 +26,8 @@ namespace PGRForms
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.menuToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.loadSessionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.label1 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -44,7 +46,7 @@ namespace PGRForms
             this.menuToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(905, 28);
+            this.menuStrip1.Size = new System.Drawing.Size(905, 24);
             this.menuStrip1.TabIndex = 4;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -53,22 +55,46 @@ namespace PGRForms
             this.menuToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.loadSessionToolStripMenuItem});
             this.menuToolStripMenuItem.Name = "menuToolStripMenuItem";
-            this.menuToolStripMenuItem.Size = new System.Drawing.Size(58, 24);
+            this.menuToolStripMenuItem.Size = new System.Drawing.Size(50, 20);
             this.menuToolStripMenuItem.Text = "Menu";
             // 
             // loadSessionToolStripMenuItem
             // 
             this.loadSessionToolStripMenuItem.Name = "loadSessionToolStripMenuItem";
-            this.loadSessionToolStripMenuItem.Size = new System.Drawing.Size(181, 26);
+            this.loadSessionToolStripMenuItem.Size = new System.Drawing.Size(142, 22);
             this.loadSessionToolStripMenuItem.Text = "Load Session";
             this.loadSessionToolStripMenuItem.Click += new System.EventHandler(this.loadSessionToolStripMenuItem_Click);
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(70, 80);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(93, 13);
+            this.label1.TabIndex = 5;
+            this.label1.Text = "Momentary values";
+            this.label1.BackColor = System.Drawing.Color.White;
+            this.label1.Visible = false;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(52, 330);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(142, 13);
+            this.label2.TabIndex = 6;
+            this.label2.Text = "Average values from session";
+            this.label2.BackColor = System.Drawing.Color.White;
+            this.label2.Visible = false;
             // 
             // Form1
             // 
             this.BackColor = System.Drawing.SystemColors.ControlLight;
             this.ClientSize = new System.Drawing.Size(905, 520);
-            this.Controls.Add(this.tabControl1);
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.label1);
             this.Controls.Add(this.menuStrip1);
+            this.Controls.Add(this.tabControl1);
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "Form1";
             this.Load += new System.EventHandler(this.Form1_Load);
@@ -147,6 +173,8 @@ namespace PGRForms
 
             xd.ForEach(x => comboBox.Items.Add(x));
             comboBox.SelectedIndex = UIConsts.DefaultComboBoxIndex;
+            label1.Visible = true;
+            label2.Visible = true;
             return comboBox;
         }
 
@@ -172,7 +200,7 @@ namespace PGRForms
         {
             var chart = new Chart()
             {
-                Location = new System.Drawing.Point(300, 180),
+                Location = new System.Drawing.Point(300, 100),
                 Name = $"chart{sessionName}"
             };
             chart.Size = new Size(400, 200);
@@ -250,9 +278,10 @@ namespace PGRForms
             }
             popup.Dispose();
         }
+
     }
 
-    
+
     public class CustomChart
     {
         public AvgParam Name { get; set; }
@@ -262,8 +291,8 @@ namespace PGRForms
 
     public static class UIConsts
     {
-        public const string ColumnHeaderText1 = "Parametr";
-        public const string ColumnHeaderText2 = "Wartość";
+        public const string ColumnHeaderText1 = "Parameter";
+        public const string ColumnHeaderText2 = "Value";
         public const int DefaultComboBoxIndex = 4;
     }
 

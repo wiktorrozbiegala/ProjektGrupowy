@@ -13,8 +13,7 @@ namespace PGRForms
         {
             _measurements = list;
         }
-
-        // ona rzyga listy z parametrami, które potem izi wrzucić do charta i obliczyć z nich średnie itp
+        
         public List<int> RetrieveData(AvgParam param)
         {
             switch (param)
