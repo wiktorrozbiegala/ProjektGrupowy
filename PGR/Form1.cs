@@ -120,7 +120,7 @@ namespace PGRForms
                 {
                     UpdateDataGrid($"{sessionName}");
                     UpdateChart(sessionName);
-                    Thread.Sleep(1000);
+                    Thread.Sleep(100);
                 }
             }).Start();
         }

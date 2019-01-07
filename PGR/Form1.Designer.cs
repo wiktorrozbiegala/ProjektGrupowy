@@ -36,12 +36,16 @@ namespace PGRForms
             if (this.IsHandleCreated)
             {
                 var sessionAllMeasurements = connection.GetSingleSessionMeas(sessionName);
+                DataUtils.ValidateData(sessionAllMeasurements);
+
                 var sessionLastMeasurement = sessionAllMeasurements.LastOrDefault().Value.ToParams();
                 
                 var sessionLastListViewData = new List<ListViewItem>();
                 foreach (var item in sessionLastMeasurement)
                 {
-                    sessionLastListViewData.Add(new ListViewItem(new string[] { item.Param, item.Value }));
+                    Param paramType;
+                    Enum.TryParse<Param>(item.Param, out paramType);
+                    sessionLastListViewData.Add(new ListViewItem(new string[] { item.Param, item.Value + "  " + Unit.GetUnit(paramType)  }));
                 }                
 
                 // update list view with last measurement
@@ -61,7 +65,9 @@ namespace PGRForms
                 sessionLastListViewData = new List<ListViewItem>();
                 foreach (var item in sessionAvgMeasurement)
                 {
-                    sessionLastListViewData.Add(new ListViewItem(new string[] { item.Param, item.Value }));
+                    Param paramType;
+                    Enum.TryParse<Param>(item.Param, out paramType);
+                    sessionLastListViewData.Add(new ListViewItem(new string[] { item.Param, item.Value + "  " + Unit.GetUnit(paramType) }));
                 }
 
                 // update list view with avg measurements
@@ -95,7 +101,9 @@ namespace PGRForms
 
 
                 // get data for current param
-                var temp = connection.GetSingleSessionMeas(sessionName).Select(x => x.Value).ToList();
+                var xd = connection.GetSingleSessionMeas(sessionName);
+                xd.ValidateData();
+                var temp = xd.Select(x => x.Value).ToList();
                 var data = new DataCollector(temp).RetrieveData(selectedParam);
 
                 var chart = CustomChartCreator.Create(selectedParam);
@@ -112,21 +120,7 @@ namespace PGRForms
                 control.Invoke(somethingImportant);
             }
         }
-        //private void Chart_MouseMove(object sender, MouseEventArgs e)
-        //{
-        //    Point mousePoint = new Point(e.X, e.Y);
-        //    foreach (var chart in charts...)
-        //    {
 
-        //    }
-        //    chart.ChartAreas[0].CursorX.SetCursorPixelPosition(mousePoint, true);
-        //    chart.ChartAreas[0].CursorY.SetCursorPixelPosition(mousePoint, true);
-        //}
-
-        //public void Init()
-        //{
-        //    connection.SetAction(UpdateDataGrid, "-LB8eNjME3_jibkajhcw", FirebaseAction.OnChange);
-        //}
         private FirebaseConnection connection = new FirebaseConnection();
 
         public delegate void myDel();
